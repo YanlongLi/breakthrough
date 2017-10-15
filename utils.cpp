@@ -5,6 +5,8 @@
 using namespace std;
 
 void printBoard(const Board& board) {
+    int nOne = 0, nMinusOne = 0;
+    //
     cout << "    ";
     for (int i = 0; i < N; i++) {
         cout << i << " ";
@@ -17,12 +19,14 @@ void printBoard(const Board& board) {
             switch (v) {
             case -1:
                 cout << "X ";
+                nMinusOne ++;
                 break;
             case 0:
                 cout << "_ ";
                 break;
             case 1:
                 cout << "O ";
+                nOne ++;
                 break;
             default:
                 fprintf(stderr, "invalid board value: (%d, %d, %d)\n", i, j, board.getValue(i, j));
@@ -31,7 +35,8 @@ void printBoard(const Board& board) {
         }
         cout << endl;
     }
-    cout << endl;
+    cout << "#One :" << nOne << endl;
+    cout << "#MinusOne :" << nOne << endl;
 }
 
 void initializeBoard(Board& board) {

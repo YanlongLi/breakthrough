@@ -16,9 +16,10 @@
 #include <cfloat>
 #include <algorithm>
 
-MinimaxAgent::MinimaxAgent(long long maxdepth, bool alphaBetaProune) {
+MinimaxAgent::MinimaxAgent(long long maxdepth, bool _alphaBetaPrune) {
     depth = 0;
     MAX_DEPTH = maxdepth;
+    alphaBetaPrune = _alphaBetaPrune;
 }
 
 double MinimaxAgent::maxerUtility(const Board& board) {
@@ -222,7 +223,7 @@ Board MinimaxAgent::nextByMiner(const Board& board) {
     double v = DBL_MAX;
     for (auto action : actions) {
         double t = minValue(action.result());
-        if (t > v) {
+        if (t < v) {
             v = t;
             if (decision == NULL) {
                 decision = new Action(board);

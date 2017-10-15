@@ -7,3 +7,6 @@
 - no alpha-beta pruning
  - several utility/evaluation function
      - controlled by `MinimaxAgent::maxerUtility()` and `MinimaxAgent::minerUtility()`
+
+## V2
+- with alpha-beta pruning
