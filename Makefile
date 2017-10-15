@@ -41,8 +41,8 @@ breakthrough: Board.o Agent.o MyAgent.o RandomAgent.o main.o utils.o
 run: breakthrough
 	@./breakthrough
 
-clean: *.o breakthrough
-	@rm -f $^
+clean:
+	@rm -f *.o breakthrough
 
 .PHONY: run
 
