@@ -6,4 +6,4 @@
 ## V1:
 - no alpha-beta pruning
  - several utility/evaluation function
-     - controlled by `MyAgent::maxerUtility()` and `MyAgent::minerUtility()`
+     - controlled by `MinimaxAgent::maxerUtility()` and `MinimaxAgent::minerUtility()`

@@ -13,7 +13,7 @@
 
 CPPFLAGS=-g --std=c++11
 
-breakthrough: Board.o Agent.o MyAgent.o RandomAgent.o main.o utils.o
+breakthrough: Board.o Agent.o MinimaxAgent.o RandomAgent.o main.o utils.o
 	@$(CXX) $(CPPFLAGS) $^ -o $@
 
 
@@ -26,8 +26,8 @@ breakthrough: Board.o Agent.o MyAgent.o RandomAgent.o main.o utils.o
 # Agent.o: Agent.cpp
 #	@g++ -g -c -std=c++11 Agent.cpp
 #
-# MyAgent.o: MyAgent.cpp
-#	@g++ -g -c -std=c++11 MyAgent.cpp
+# MinimaxAgent.o: MinimaxAgent.cpp
+#	@g++ -g -c -std=c++11 MinimaxAgent.cpp
 #
 # RandomAgent.o: RandomAgent.cpp
 #	@g++ -g -c -std=c++11 RandomAgent.cpp

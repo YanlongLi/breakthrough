@@ -4,7 +4,7 @@
 #include <vector>
 #include "Board.h"
 #include "Agent.h"
-#include "MyAgent.h"
+#include "MinimaxAgent.h"
 #include "RandomAgent.h"
 #include "utils.h"
 
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     printBoard(board);
     //
     RandomAgent agent = RandomAgent();
-    MyAgent myAgent = MyAgent(10);
+    MinimaxAgent myAgent = MinimaxAgent(100, true);
     int round = 0;
     while (true) {
         ++round;

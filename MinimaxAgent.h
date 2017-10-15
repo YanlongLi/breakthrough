@@ -1,6 +1,6 @@
 /* =============================================================================
-#     FileName: MyAgent.h
-#         Desc: MyAgent using Minimax
+#     FileName: MinimaxAgent.h
+#         Desc: MinimaxAgent using Minimax
 #       Author: YanlongLi
 #        Email: lansunlong@gmail.com
 #     HomePage: http://www.yanlongli.me
@@ -17,9 +17,13 @@
 #include "Agent.h"
 #include <map>
 
-class MyAgent : public Agent {
-    long long depth;
+class MinimaxAgent : public Agent {
     long long MAX_DEPTH;
+    bool alphaBetaPrune;
+
+    long long depth;
+    double alpha, beta;
+
     double simpleUtility(const Board& board);
     double defensiveHeuristic(const Board& board, int player);
     double offensiveHeuristic(const Board& board, int player);
@@ -30,11 +34,7 @@ class MyAgent : public Agent {
     double maxValue(const Board& board);
     double minValue(const Board& board);
   public:
-    MyAgent(long long maxdepth) {
-        depth = 0;
-        MAX_DEPTH = maxdepth;
-    }
-    ~MyAgent() {}
+    MinimaxAgent(long long maxdepth, bool alphaBetaPrune);
     virtual Board nextByMaxer(const Board& board);
     virtual Board nextByMiner(const Board& board);
 };
