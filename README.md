@@ -3,6 +3,7 @@
 
 - `make` to build
 - `make run` to run the program
+- `make clean` to clean the build results
 
 ## V1:
 - no alpha-beta pruning
