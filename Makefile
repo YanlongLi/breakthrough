@@ -13,7 +13,7 @@
 
 CPPFLAGS=-g --std=c++11
 
-breakthrough: Board.o Agent.o MinimaxAgent.o RandomAgent.o main.o utils.o
+breakthrough: Board.o Agent.o MinimaxAgent.o Evaluator.o RandomAgent.o main.o utils.o
 	@$(CXX) $(CPPFLAGS) $^ -o $@
 
 

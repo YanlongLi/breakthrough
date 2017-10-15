@@ -12,125 +12,14 @@
 ============================================================================= */
 
 #include "MinimaxAgent.h"
+#include "Evaluator.h"
 #include "utils.h"
 #include <cfloat>
 #include <algorithm>
 
-MinimaxAgent::MinimaxAgent(long long maxdepth, bool _alphaBetaPrune) {
+MinimaxAgent::MinimaxAgent(long long maxdepth, bool _alphaBetaPrune, Evaluator* _evaluator)
+    : MAX_DEPTH(maxdepth), alphaBetaPrune(_alphaBetaPrune), evaluator(_evaluator) {
     depth = 0;
-    MAX_DEPTH = maxdepth;
-    alphaBetaPrune = _alphaBetaPrune;
-}
-
-double MinimaxAgent::maxerUtility(const Board& board) {
-    // double r = simpleUtility(board);
-    // double r = defensiveHeuristic(board, 1);
-    double r = offensiveHeuristic(board, 1);
-    // double r = 2 * distanceFromBase(board, 2, 1) + 2 * distanceFromBase(board, 2, -1);
-    return r + (rand() / (float)RAND_MAX);
-}
-
-double MinimaxAgent::minerUtility(const Board& board) {
-    // double r = simpleUtility(board);
-    // double r = defensiveHeuristic(board, -1);
-    double r = offensiveHeuristic(board, -1);
-    // double r = 2 * distanceFromBase(board, 2, 1) + 2 * distanceFromBase(board, 2, -1);
-    return r + (rand() / (float)RAND_MAX);
-}
-
-/*
- * SimpleUtility, compute the the difference of work number
- */
-double MinimaxAgent::simpleUtility(const Board& board) {
-    int finish = this->checkWinOrLoss(board);
-    if (finish != 0) {
-        return finish == 1 ? 20 : -20;
-    }
-    int sum = 0;
-    for (int i = 0; i < N; i++)
-        for (int j = 0; j < N; j++)
-            sum += board.getValue(i, j);
-    return sum;
-}
-
-/*
- * 2*(number_of_own_pieces_remaining)
- */
-double MinimaxAgent::defensiveHeuristic(const Board& board, int player) {
-    if (player != 1 && player != -1) {
-        fprintf(stderr, "invalid player value: %d\n", player);
-        exit(-1);
-    }
-    int nOne = 0, nMinusOne = 0;
-    for (int  i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            if (board.getValue(i, j) == 1) nOne ++;
-            else if (board.getValue(i, j) == -1) nMinusOne ++;
-        }
-    }
-    return 2 * (player == 1 ? nOne : nMinusOne);
-}
-
-/*
- * 2*(30 - number_of_opponent_pieces_remaining)
- */
-double MinimaxAgent::offensiveHeuristic(const Board& board, int player) {
-    if (player != 1 && player != -1) {
-        fprintf(stderr, "invalid player value: %d\n", player);
-        exit(-1);
-    }
-    int nOne = 0, nMinusOne = 0;
-    for (int  i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            if (board.getValue(i, j) == 1) nOne ++;
-            else if (board.getValue(i, j) == -1) nMinusOne ++;
-        }
-    }
-    return 2 * (player == 1 ? nMinusOne : nOne);
-}
-
-/*
- * average distance of n workers that far from base
- */
-double MinimaxAgent::distanceFromBase(const Board& board, int n, int player) {
-    if (player != 1 && player != -1) {
-        fprintf(stderr, "invalid player value: %d\n", player);
-        exit(-1);
-    }
-    int count = 0, sum = 0;
-    if (player == 1) {
-        for (int k = N * N - 1; k >= 0; k--) {
-            int i = k / N, j = k % N;
-            if (board.getValue(i, j) == 1) {
-                count ++;
-                sum += j * j;
-                if (count == n) {
-                    break;
-                }
-            }
-        }
-        if (count == 0) {
-            fprintf(stderr, "invalid board, no type %d worker\n", player);
-            exit(-1);
-        }
-        return sum / (double)count;
-    } else {
-        for (int k = 0; k < N * N; k++) {
-            int i = k / N, j = k % N;
-            if (board.getValue(i, j) == 1) {
-                count ++;
-                sum += (N - 1 - j) * (N - 1 - j);
-                if (count == n) {
-                    break;
-                }
-            }
-        }
-        if (count == 0) {
-            fprintf(stderr, "invalid board, no type %d worker\n", player);
-            exit(-1);
-        }
-        return sum / (double)count;
-    }
 }
 
 /*
@@ -140,15 +29,15 @@ double MinimaxAgent::distanceFromBase(const Board& board, int n, int player) {
  */
 double MinimaxAgent::maxValue(const Board& board) {
     int wl = this->checkWinOrLoss(board);
-    if (wl != 0) return maxerUtility(board); // terminal state, so maxer win
+    if (wl != 0) return (*evaluator).maxerEvaluation(board); // terminal state, so maxer win
     //
     depth ++;
     if (depth >= MAX_DEPTH) { // reatch max depth
-        return maxerUtility(board);
+        return (*evaluator).maxerEvaluation(board);
     }
     //
     vector<Action> actions = validActionByMiner(board);
-    double v = DBL_MIN;
+    double v = -DBL_MAX;
     for (auto action : actions) {
         v = max(v, minValue(action.result()));
         if (alphaBetaPrune) {
@@ -166,11 +55,11 @@ double MinimaxAgent::maxValue(const Board& board) {
  */
 double MinimaxAgent::minValue(const Board& board) {
     int wl = this->checkWinOrLoss(board);
-    if (wl != 0) return minerUtility(board); // terminal state, so miner win
+    if (wl != 0) return (*evaluator).minerEvaluation(board); // terminal state, so miner win
     //
     depth ++;
     if (depth >= MAX_DEPTH) { // reatch max depth
-        return minerUtility(board);
+        return (*evaluator).minerEvaluation(board);
     }
     //
     double v = DBL_MAX;
@@ -190,7 +79,7 @@ Board MinimaxAgent::nextByMaxer(const Board& board) {
     // assume the input is not a terminal state
     vector<Action> actions = validActionByMaxer(board);
     Action* decision = NULL;
-    double v = DBL_MIN;
+    double v = -DBL_MAX;
     for (auto action : actions) {
         double t = maxValue(action.result());
         if (t > v) {
@@ -205,6 +94,7 @@ Board MinimaxAgent::nextByMaxer(const Board& board) {
         fprintf(stderr, "no action returned\ncurrent board for maxer:\n");
         printBoard(board);
         fprintf(stderr, "valid action: %ld\n", actions.size());
+        fprintf(stderr, "%f\n", v);
         for (Action action : actions) {
             double t = maxValue(action.result());
             fprintf(stderr, "%f\n", t);
@@ -215,7 +105,7 @@ Board MinimaxAgent::nextByMaxer(const Board& board) {
 }
 Board MinimaxAgent::nextByMiner(const Board& board) {
     depth = 0;
-    alpha = DBL_MIN;
+    alpha = -DBL_MAX;
     beta = DBL_MAX;
     // assume the input is not a terminal state
     vector<Action> actions = validActionByMiner(board);

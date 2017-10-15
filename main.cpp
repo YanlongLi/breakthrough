@@ -7,6 +7,7 @@
 #include "Board.h"
 #include "Agent.h"
 #include "MinimaxAgent.h"
+#include "Evaluator.h"
 #include "RandomAgent.h"
 #include "utils.h"
 
@@ -45,10 +46,14 @@ int main(int argc, char *argv[]) {
     //
     srand(time(0));
     //
-    RandomAgent randomAgent = RandomAgent();
-    MinimaxAgent minimaxAgent = MinimaxAgent(100, true);
-    Agent& agent1 = randomAgent;
-    Agent& agent2 = minimaxAgent;
+    SimpleEvaluator evaluator;
+    OffensiveHeuristicEvaluator offeEval;
+    //
+    // RandomAgent randomAgent = RandomAgent();
+    MinimaxAgent minimaxAgent = MinimaxAgent(100, true, &evaluator);
+    MinimaxAgent minimaxAgent2 = MinimaxAgent(100, true, &offeEval);
+    Agent& agent1 = minimaxAgent;
+    Agent& agent2 = minimaxAgent2;
     int status = runMatch(agent1, agent2);
     if (status == 1) {
         cout << "Maxer Win" << endl;

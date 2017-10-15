@@ -35,6 +35,8 @@ class Agent {
     vector<Action> validActionByMaxer(const Board& board);
     vector<Action> validActionByMiner(const Board& board);
   public:
+    Agent() {}
+    virtual ~Agent() {}
     virtual Board nextByMaxer(const Board& board) = 0;
     virtual Board nextByMiner(const Board& board) = 0;
     /*

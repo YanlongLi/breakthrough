@@ -20,6 +20,8 @@
 
 class RandomAgent: public Agent {
   public:
+    RandomAgent() {}
+    virtual ~RandomAgent() { }
     virtual Board nextByMaxer(const Board& board);
     virtual Board nextByMiner(const Board& board);
 };
