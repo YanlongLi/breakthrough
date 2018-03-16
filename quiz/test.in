@@ -1,0 +1,67 @@
+Atlanta,Charleston,63
+Atlanta,Miami,116
+Atlanta,Nashville,67
+Atlanta,Raleigh,96
+Calgary,Helena,130
+Calgary,Winnipeg,180
+Chicago,Saint Louis,104
+Dallas,Houston,46
+Denver,Kansas City,135
+Denver,Omaha,130
+Denver,Phoenix,128
+Denver,Santa Fe,70
+Duluth,Chicago,157
+Duluth,Omaha,74
+Duluth,Sault Ste Marie,110
+El Paso,Dallas,140
+Helena,Denver,126
+Helena,Duluth,150
+Helena,Omaha,174
+Helena,Winnipeg,187
+Kansas City,Oklahoma City,61
+Kansas City,Saint Louis,68
+Little Rock,Dallas,74
+Little Rock,Nashville,94
+Little Rock,New Orleans,100
+Little Rock,Saint Louis,60
+Los Angeles,El Paso,191
+Los Angeles,Las Vegas,66
+Los Angeles,Phoenix,109
+Miami,Charleston,80
+Montreal,Boston,69
+Montreal,Toronto,115
+Nashville,Raleigh,128
+Nashville,Saint Louis,85
+New Orleans,Atlanta,120
+New Orleans,Houston,80
+New Orleans,Miami,151
+New York,Boston,74
+New York,Montreal,99
+New York,Washington,76
+Oklahoma City,Little Rock,72
+Omaha,Chicago,142
+Phoenix,Santa Fe,85
+Pittsburgh,Chicago,81
+Pittsburgh,New York,69
+Pittsburgh,Toronto,80
+Pittsburgh,Washington,85
+Portland,Salt Lake City,175
+Portland,San Francisco,151
+Raleigh,Charleston,95
+Raleigh,Washington,47
+Salt Lake City,Denver,101
+Salt Lake City,Helena,116
+Salt Lake City,Las Vegas,89
+San Francisco,Los Angeles,100
+San Francisco,Salt Lake City,156
+Santa Fe,El Paso,65
+Santa Fe,Oklahoma City,121
+Sault Ste Marie,Montreal,193
+Sault Ste Marie,Toronto,90
+Seattle,Calgary,118
+Seattle,Helena,189
+Seattle,Portland,44
+Vancouver,Calgary,100
+Vancouver,Seattle,45
+Winnipeg,Duluth,103
+Winnipeg,Sault Ste Marie,156
